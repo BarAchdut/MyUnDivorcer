@@ -1,0 +1,14 @@
+<!-- res/layout/fragment_scanner_barcode.xml -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.BarcodeScannerFragment">
+
+    <com.journeyapps.barcodescanner.CompoundBarcodeView
+        android:id="@+id/barcode_scanner"
+        android:layout_width="match_parent"
+        android:layout_height="512dp"
+        android:layout_marginBottom="-2dp" />
+</RelativeLayout>

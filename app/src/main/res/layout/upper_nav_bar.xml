@@ -1,0 +1,40 @@
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/upperNavbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary">
+
+    <!-- Left Button -->
+    <ImageButton
+        android:id="@+id/btnProfile"
+        android:layout_width="55dp"
+        android:layout_height="48dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:onClick="onProfileButtonClick"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/profile_icon" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Right Button -->
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="81dp"
+        android:layout_height="54dp"
+        android:layout_gravity="end"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:onClick="onBackButtonClick"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_icon" />
+
+</com.google.android.material.appbar.MaterialToolbar>
