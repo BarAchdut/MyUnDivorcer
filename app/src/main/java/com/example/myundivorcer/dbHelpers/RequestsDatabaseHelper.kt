@@ -1,10 +1,10 @@
-package com.example.shopease.dbHelpers
+package com.example.myundivorcer.dbHelpers
 
 import android.util.Log
-import com.example.shopease.dataClasses.FriendInfo
-import com.example.shopease.dataClasses.FriendRequest
-import com.example.shopease.dataClasses.User
-import com.example.shopease.utils.Utils.base64ToByteArray
+import com.example.myundivorcer.dataClasses.FriendInfo
+import com.example.myundivorcer.dataClasses.FriendRequest
+import com.example.myundivorcer.dataClasses.User
+import com.example.myundivorcer.utils.Utils.base64ToByteArray
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

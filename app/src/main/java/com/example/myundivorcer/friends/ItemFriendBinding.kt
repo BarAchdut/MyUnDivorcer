@@ -1,9 +1,9 @@
-package com.example.shopease.friends
+package com.example.myundivorcer.friends
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.shopease.R
+import com.example.myundivorcer.R
 
 class ItemFriendBinding private constructor(view: View) {
     val imageViewFriend: ImageView = view.findViewById(R.id.imageViewShowFriend)

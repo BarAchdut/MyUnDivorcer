@@ -1,12 +1,12 @@
-package com.example.shopease.recipes
+package com.example.myundivorcer.recipes
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shopease.R
-import com.example.shopease.dataClasses.Recipe
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.Recipe
 
 class RecipesAdapter(
     val items: MutableList<Recipe>,

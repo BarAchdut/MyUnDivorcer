@@ -1,12 +1,12 @@
-package com.example.shopease.friends
+package com.example.myundivorcer.friends
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.shopease.activities.BaseActivity
-import com.example.shopease.R
+import com.example.myundivorcer.activities.BaseActivity
+import com.example.myundivorcer.R
 import com.google.android.material.imageview.ShapeableImageView
 
 class FriendsFragment : Fragment() {

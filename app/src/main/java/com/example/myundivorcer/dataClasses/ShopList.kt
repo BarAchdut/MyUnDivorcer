@@ -1,4 +1,4 @@
-package com.example.shopease.dataClasses
+package com.example.myundivorcer.dataClasses
 
 data class ShopList(
     val id: String? = null,

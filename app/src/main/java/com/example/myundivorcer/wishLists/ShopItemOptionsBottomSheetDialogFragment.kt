@@ -1,4 +1,4 @@
-package com.example.shopease.wishLists
+package com.example.myundivorcer.wishLists
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
-import com.example.shopease.R
+import com.example.myundivorcer.R
 
 class ShopItemOptionsBottomSheetDialogFragment : DialogFragment() {
 

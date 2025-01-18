@@ -1,4 +1,4 @@
-package com.example.shopease.fragments
+package com.example.myundivorcer.fragments
 
 import android.app.Activity
 import android.content.Intent
@@ -14,11 +14,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.example.shopease.activities.BaseActivity
-import com.example.shopease.R
-import com.example.shopease.dbHelpers.UsersDatabaseHelper
-import com.example.shopease.utils.Utils
-import com.example.shopease.utils.Utils.base64ToByteArray
+import com.example.myundivorcer.activities.BaseActivity
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dbHelpers.UsersDatabaseHelper
+import com.example.myundivorcer.utils.Utils
+import com.example.myundivorcer.utils.Utils.base64ToByteArray
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText

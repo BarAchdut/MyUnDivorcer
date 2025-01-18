@@ -1,4 +1,4 @@
-package com.example.shopease.dataClasses
+package com.example.myundivorcer.dataClasses
 
 import java.io.Serializable
 

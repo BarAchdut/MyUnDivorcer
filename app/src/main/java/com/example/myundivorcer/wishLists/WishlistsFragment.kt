@@ -1,4 +1,4 @@
-package com.example.shopease.wishLists
+package com.example.myundivorcer.wishLists
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -11,11 +11,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shopease.activities.BaseActivity
-import com.example.shopease.R
-import com.example.shopease.dataClasses.ShopList
-import com.example.shopease.dbHelpers.RequestsDatabaseHelper
-import com.example.shopease.dbHelpers.ShopListsDatabaseHelper
+import com.example.myundivorcer.activities.BaseActivity
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.ShopList
+import com.example.myundivorcer.dbHelpers.RequestsDatabaseHelper
+import com.example.myundivorcer.dbHelpers.ShopListsDatabaseHelper
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 

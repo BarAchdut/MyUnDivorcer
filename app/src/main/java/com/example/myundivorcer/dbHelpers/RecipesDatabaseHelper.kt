@@ -1,8 +1,8 @@
-package com.example.shopease.dbHelpers
+package com.example.myundivorcer.dbHelpers
 
 import android.util.Log
-import com.example.shopease.dataClasses.Recipe
-import com.example.shopease.dataClasses.ShopListItem
+import com.example.myundivorcer.dataClasses.Recipe
+import com.example.myundivorcer.dataClasses.ShopListItem
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.GenericTypeIndicator
