@@ -1,7 +1,7 @@
-package com.example.shopease.activities
+package com.example.myundivorcer.activities
 
 import android.os.Bundle
-import com.example.shopease.R
+import com.example.myundivorcer.R
 
 class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

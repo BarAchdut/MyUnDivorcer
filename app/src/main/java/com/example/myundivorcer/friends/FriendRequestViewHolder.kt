@@ -1,4 +1,4 @@
-package com.example.shopease.friends
+package com.example.myundivorcer.friends
 
 import android.content.Context
 import android.view.View
@@ -6,9 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shopease.R
-import com.example.shopease.dataClasses.FriendRequest
-import com.example.shopease.utils.Utils.byteArrayToBitmap
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.FriendRequest
+import com.example.myundivorcer.utils.Utils.byteArrayToBitmap
 
 class FriendRequestViewHolder(
     itemView: View,

@@ -1,4 +1,4 @@
-package com.example.shopease.utils
+package com.example.myundivorcer.utils
 
 import android.content.Context
 import android.graphics.Canvas

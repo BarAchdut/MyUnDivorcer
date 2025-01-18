@@ -1,4 +1,4 @@
-package com.example.shopease.friends
+package com.example.myundivorcer.friends
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shopease.activities.BaseActivity
-import com.example.shopease.R
-import com.example.shopease.dataClasses.FriendRequest
-import com.example.shopease.dbHelpers.RequestsDatabaseHelper
+import com.example.myundivorcer.activities.BaseActivity
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.FriendRequest
+import com.example.myundivorcer.dbHelpers.RequestsDatabaseHelper
 
 class FriendRequestsFragment : Fragment() {
 

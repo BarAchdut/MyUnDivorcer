@@ -1,4 +1,4 @@
-package com.example.shopease.dbHelpers
+package com.example.myundivorcer.dbHelpers
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference

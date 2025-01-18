@@ -1,4 +1,4 @@
-package com.example.shopease.recipes
+package com.example.myundivorcer.recipes
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -19,12 +19,12 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shopease.R
-import com.example.shopease.dataClasses.Recipe
-import com.example.shopease.dataClasses.ShopListItem
-import com.example.shopease.dbHelpers.RecipesDatabaseHelper
-import com.example.shopease.dbHelpers.RequestsDatabaseHelper
-import com.example.shopease.wishLists.ShopItemOptionsBottomSheetDialogFragment
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.Recipe
+import com.example.myundivorcer.dataClasses.ShopListItem
+import com.example.myundivorcer.dbHelpers.RecipesDatabaseHelper
+import com.example.myundivorcer.dbHelpers.RequestsDatabaseHelper
+import com.example.myundivorcer.wishLists.ShopItemOptionsBottomSheetDialogFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.button.MaterialButton

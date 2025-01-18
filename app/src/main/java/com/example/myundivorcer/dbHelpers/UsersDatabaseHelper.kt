@@ -1,10 +1,10 @@
-package com.example.shopease.dbHelpers
+package com.example.myundivorcer.dbHelpers
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.example.shopease.dataClasses.User
-import com.example.shopease.utils.Utils.byteArrayToBase64
+import com.example.myundivorcer.dataClasses.User
+import com.example.myundivorcer.utils.Utils.byteArrayToBase64
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot

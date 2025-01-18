@@ -1,4 +1,4 @@
-package com.example.shopease.wishLists
+package com.example.myundivorcer.wishLists
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -11,9 +11,9 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shopease.R
-import com.example.shopease.dataClasses.ShopListItem
-import com.example.shopease.utils.StrikeThroughTextView
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.ShopListItem
+import com.example.myundivorcer.utils.StrikeThroughTextView
 
 class ShopListAdapter(
     val items: MutableList<ShopListItem>,

@@ -1,4 +1,4 @@
-package com.example.shopease.fragments
+package com.example.myundivorcer.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -17,9 +17,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.shopease.activities.BaseActivity
-import com.example.shopease.R
-import com.example.shopease.dbHelpers.ShopListsDatabaseHelper
+import com.example.myundivorcer.activities.BaseActivity
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dbHelpers.ShopListsDatabaseHelper
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.zxing.ResultPoint

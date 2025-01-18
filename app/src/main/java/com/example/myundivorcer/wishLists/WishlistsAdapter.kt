@@ -1,12 +1,12 @@
-package com.example.shopease.wishLists
+package com.example.myundivorcer.wishLists
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shopease.R
-import com.example.shopease.dataClasses.ShopList
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.ShopList
 
 class WishlistsAdapter(
     val items: MutableList<ShopList>,
