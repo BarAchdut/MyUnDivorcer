@@ -1,4 +1,4 @@
-package com.example.shopease.activities
+package com.example.myundivorcer.activities
 
 import android.content.Intent
 import android.os.Bundle
