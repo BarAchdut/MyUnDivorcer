@@ -1,4 +1,4 @@
-package com.example.myundivorcer.recipes
+package com.example.myundivorcer.wishLists
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myundivorcer.R
-import com.example.myundivorcer.dataClasses.Recipe
+import com.example.myundivorcer.dataClasses.ShopList
 
-class RecipesAdapter(
-    val items: MutableList<Recipe>,
+class WishlistsAdapter(
+    val items: MutableList<ShopList>,
     var itemClickListener: OnItemClickListener? = null,
     var itemLongClickListener: OnItemLongClickListener? = null,
     private var parentView: View
-) : RecyclerView.Adapter<RecipesAdapter.RecipesHolder>() {
+) : RecyclerView.Adapter<WishlistsAdapter.WishListHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
@@ -23,15 +23,15 @@ class RecipesAdapter(
         fun onItemLongClick(position: Int, view: View)
     }
 
-    class RecipesHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val recipeName: TextView = itemView.findViewById(R.id.tvShopListTitle)
+    class WishListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val shopListName: TextView = itemView.findViewById(R.id.tvShopListTitle)
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): RecipesHolder {
-        return RecipesHolder(
+    ): WishListHolder {
+        return WishListHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.list_picker,
                 parent,
@@ -40,7 +40,7 @@ class RecipesAdapter(
         )
     }
 
-    fun initialList(itemsToAdd: List<Recipe>) {
+    fun initialList(itemsToAdd: List<ShopList>) {
         items.addAll(itemsToAdd)
         notifyDataSetChanged()
     }
@@ -49,17 +49,17 @@ class RecipesAdapter(
         items.clear();
     }
 
-    fun addRecipe(item: Recipe) {
+    fun addShopList(item: ShopList) {
         items.add(item)
         notifyItemInserted(items.size + 1)
         notifyItemChanged(items.size + 1)
     }
 
-    override fun onBindViewHolder(holder: RecipesHolder, position: Int) {
-        val recipeItems = items[position]
+    override fun onBindViewHolder(holder: WishListHolder, position: Int) {
+        val shopList = items[position]
 
         // Bind data to views
-        holder.recipeName.text = recipeItems.name
+        holder.shopListName.text = shopList.name
 
         // Set click listener for item
         holder.itemView.setOnClickListener {

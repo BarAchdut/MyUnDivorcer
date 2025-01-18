@@ -1,4 +1,4 @@
-package com.example.shopease.activities
+package com.example.myundivorcer.activities
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -15,9 +15,9 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.shopease.R
-import com.example.shopease.dataClasses.User
-import com.example.shopease.dbHelpers.UsersDatabaseHelper
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.User
+import com.example.myundivorcer.dbHelpers.UsersDatabaseHelper
 import com.google.android.material.textfield.TextInputEditText
 import java.io.ByteArrayOutputStream
 

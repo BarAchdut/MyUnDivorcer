@@ -1,4 +1,4 @@
-package com.example.shopease.friends
+package com.example.myundivorcer.friends
 
 import android.app.Dialog
 import android.os.Bundle
@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.gridlayout.widget.GridLayout
-import com.example.shopease.activities.BaseActivity
-import com.example.shopease.R
-import com.example.shopease.dataClasses.FriendInfo
-import com.example.shopease.dbHelpers.RequestsDatabaseHelper
-import com.example.shopease.utils.Utils.byteArrayToBitmap
+import com.example.myundivorcer.activities.BaseActivity
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.FriendInfo
+import com.example.myundivorcer.dbHelpers.RequestsDatabaseHelper
+import com.example.myundivorcer.utils.Utils.byteArrayToBitmap
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 

@@ -1,4 +1,4 @@
-package com.example.myundivorcer.recipes
+package com.example.myundivorcer.wishLists
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -15,21 +15,19 @@ import com.example.myundivorcer.R
 import com.example.myundivorcer.dataClasses.ShopListItem
 import com.example.myundivorcer.utils.StrikeThroughTextView
 
-class RecipeAdapter(
+class ShopListAdapter(
     val items: MutableList<ShopListItem>,
     var itemLongClickListener: OnItemLongClickListener? = null
-) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
-
-    var procedure: String = ""
+) : RecyclerView.Adapter<ShopListAdapter.ShopListHolder>() {
 
     interface OnItemLongClickListener {
         fun onItemLongClick(position: Int, view: View)
     }
 
-    class RecipeHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class ShopListHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder {
-        return RecipeHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopListHolder {
+        return ShopListHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.shop_list_item,
                 parent,
@@ -42,7 +40,7 @@ class RecipeAdapter(
         items.addAll(itemsToAdd)
     }
 
-    fun addRecipeItem(item: ShopListItem) {
+    fun addShopListItem(item: ShopListItem) {
         items.add(item)
         notifyItemInserted(items.size + 1)
     }
@@ -62,7 +60,7 @@ class RecipeAdapter(
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: RecipeHolder, position: Int) {
+    override fun onBindViewHolder(holder: ShopListHolder, position: Int) {
         val curItem = items[position]
         holder.itemView.apply {
             val tvShopListItem: StrikeThroughTextView = findViewById(R.id.tvShopItemTitle)
@@ -74,7 +72,6 @@ class RecipeAdapter(
             cbCheckBox.isChecked = curItem.checked
             countItem.text = "${curItem.count} ${curItem.unit}"
             tvShopListItem.setStrikeThroughTextFlag(cbCheckBox.isChecked)
-
             cbCheckBox.setOnCheckedChangeListener { _, checked ->
                 toggleStrikeThrough(tvShopListItem, checked, pencilImageView)
                 curItem.checked = !curItem.checked

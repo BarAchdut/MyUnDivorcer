@@ -1,11 +1,11 @@
-package com.example.shopease.friends
+package com.example.myundivorcer.friends
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shopease.R
-import com.example.shopease.dataClasses.FriendRequest
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.FriendRequest
 
 class FriendRequestsAdapter(
     private var friendRequests: List<FriendRequest>,

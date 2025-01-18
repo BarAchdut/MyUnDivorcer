@@ -1,4 +1,4 @@
-package com.example.shopease.activities
+package com.example.myundivorcer.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,9 +6,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.shopease.R
-import com.example.shopease.dataClasses.User
-import com.example.shopease.dbHelpers.UsersDatabaseHelper
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.User
+import com.example.myundivorcer.dbHelpers.UsersDatabaseHelper
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {

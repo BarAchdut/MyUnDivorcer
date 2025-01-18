@@ -1,4 +1,4 @@
-package com.example.shopease.activities
+package com.example.myundivorcer.activities
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,15 +6,15 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.shopease.InterfaceFragmentTitle
-import com.example.shopease.R
-import com.example.shopease.dataClasses.User
-import com.example.shopease.dbHelpers.UsersDatabaseHelper
-import com.example.shopease.fragments.HomeFragment
-import com.example.shopease.fragments.ProfileFragment
-import com.example.shopease.fragments.SavedPlaceFragment
-import com.example.shopease.friends.FriendsFragment
-import com.example.shopease.wishLists.WishlistsFragment
+import com.example.myundivorcer.InterfaceFragmentTitle
+import com.example.myundivorcer.R
+import com.example.myundivorcer.dataClasses.User
+import com.example.myundivorcer.dbHelpers.UsersDatabaseHelper
+import com.example.myundivorcer.fragments.HomeFragment
+import com.example.myundivorcer.fragments.ProfileFragment
+import com.example.myundivorcer.fragments.SavedPlaceFragment
+import com.example.myundivorcer.friends.FriendsFragment
+import com.example.myundivorcer.wishLists.WishlistsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 open class BaseActivity : AppCompatActivity(), InterfaceFragmentTitle {
