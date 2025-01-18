@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.myundivorcer.utils.StrikeThroughTextView
+    <com.example.shopease.utils.StrikeThroughTextView
         android:id="@+id/tvShopItemTitle"
         android:layout_width="200dp"
         android:layout_height="45dp"
@@ -33,7 +33,7 @@
         tools:ignore="RtlCompat" />
 
 
-    <com.example.myundivorcer.utils.StrikeThroughTextView
+    <com.example.shopease.utils.StrikeThroughTextView
         android:id="@+id/tvItemCount"
         android:layout_width="60dp"
         android:layout_height="45dp"
