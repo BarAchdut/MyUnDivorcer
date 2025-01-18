@@ -1,10 +1,10 @@
-package com.example.shopease.activities
+package com.example.myundivorcer.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.shopease.R
+import com.example.myundivorcer.R
 
 class MainActivity : AppCompatActivity() {
 
