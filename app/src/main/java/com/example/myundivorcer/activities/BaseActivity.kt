@@ -12,7 +12,6 @@ import com.example.myundivorcer.dataClasses.User
 import com.example.myundivorcer.dbHelpers.UsersDatabaseHelper
 import com.example.myundivorcer.fragments.HomeFragment
 import com.example.myundivorcer.fragments.ProfileFragment
-import com.example.myundivorcer.fragments.SavedPlaceFragment
 import com.example.myundivorcer.friends.FriendsFragment
 import com.example.myundivorcer.wishLists.WishlistsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
