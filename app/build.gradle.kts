@@ -34,7 +34,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
-        tasks.register("testClasses")
     }
     buildFeatures {
         compose = true
