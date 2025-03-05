@@ -149,7 +149,7 @@ class RegisterActivity : AppCompatActivity() {
 
         // Create a ContentValues object with the required fields
         val values = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, "Title")
+            put(MediaStore.Images.Media.DISPLAY_NAME, "Title_${System.currentTimeMillis()}.png")
             put(MediaStore.Images.Media.MIME_TYPE, "image/png")
             put(MediaStore.Images.Media.WIDTH, bitmap.width)
             put(MediaStore.Images.Media.HEIGHT, bitmap.height)
