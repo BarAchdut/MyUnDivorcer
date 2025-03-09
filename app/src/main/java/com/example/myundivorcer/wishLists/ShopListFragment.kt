@@ -10,6 +10,7 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,9 @@ import com.example.myundivorcer.dbHelpers.ShopListsDatabaseHelper
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.button.MaterialButton
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.util.*
 
 class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.BottomSheetListener {
@@ -43,11 +47,36 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
     private lateinit var username: String
     private lateinit var shopListName: TextView
     private val PERMISSION_REQUEST_CODE = 101
-    private val PICK_IMAGE_REQUEST = 102
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var geocoder: Geocoder
     private lateinit var uploadImageButton: ImageButton
+    private var selectedItemPosition: Int = -1
+    private var tempImagePath: String? = null  // Store internal file path instead of URI
+
+    private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+            val imageUri = result.data?.data
+            if (imageUri != null) {
+                try {
+                    // Copy the image to internal storage
+                    val internalFile = copyImageToInternalStorage(imageUri)
+                    if (selectedItemPosition != -1) {
+                        // Editing existing item
+                        handleImageSelected(internalFile.absolutePath, selectedItemPosition)
+                    } else {
+                        // New item
+                        tempImagePath = internalFile.absolutePath
+                        showToast("תמונה נבחרה, כעת הוסף את הפריט")
+                    }
+                } catch (e: Exception) {
+                    Log.e("ShopListFragment", "Failed to copy image: ${e.message}")
+                    showToast("שגיאה בעת העתקת התמונה: ${e.message}")
+                }
+            }
+        }
+        selectedItemPosition = -1
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -62,6 +91,8 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
             if (sL != null) {
                 shopList = sL
                 initializeUI(view)
+            } else {
+                Log.e("ShopListFragment", "Failed to load shop list with ID: $id")
             }
         }
 
@@ -77,20 +108,10 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
             }
         }
 
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                val imageUri = result.data?.data
-                if (imageUri != null) {
-                    handleImageSelected(imageUri)
-                }
-            }
-        }
-
         return view
     }
 
     private fun initializeUI(view: View) {
-
         shopListAdapter = ShopListAdapter(mutableListOf(),
             itemLongClickListener = object : ShopListAdapter.OnItemLongClickListener {
                 override fun onItemLongClick(position: Int, view: View) {
@@ -108,7 +129,7 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
         val count = view.findViewById<TextView>(R.id.etQuantity)
         val unitSpinner = view.findViewById<Spinner>(R.id.unitSpinner)
         uploadImageButton = view.findViewById<ImageButton>(R.id.bUploadImage)
-        val unitList = listOf("יחידות", "קג", "ג", "מל", "ליטר") // Replace with your list of units
+        val unitList = listOf("יחידות", "קג", "ג", "מל", "ליטר")
         val unitAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, unitList)
         unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -119,17 +140,25 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
             val titleItem = itemTitle.text.toString()
             val countItem = count.text.toString()
             val unit = unitSpinner.selectedItem.toString()
-            if (titleItem.isNotEmpty() and countItem.isNotEmpty()) {
-                val newItem = ShopListItem(titleItem, countItem.toInt(), unit)
+            if (titleItem.isNotEmpty() && countItem.isNotEmpty()) {
+                val newItem = ShopListItem(
+                    title = titleItem,
+                    count = countItem.toInt(),
+                    unit = unit,
+                    imageUri = tempImagePath  // Use internal file path
+                )
                 shopListAdapter.addShopListItem(newItem)
                 itemTitle.text.clear()
+                count.text = ""
+                tempImagePath = null
+                updateList(shopListAdapter.items)
             } else {
                 showToast("נראה שחסר לך שם מוצר ואו כמות.")
             }
         }
 
         uploadImageButton.setOnClickListener {
-            openImagePicker()
+            openImagePicker(-1)
         }
 
         val addRecipesButton = view.findViewById<MaterialButton>(R.id.bAddRecipes)
@@ -141,28 +170,35 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
         shopListName.text = shopList.name
     }
 
-    private fun openImagePicker() {
+    private fun openImagePicker(position: Int) {
+        selectedItemPosition = position
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        imagePickerLauncher.launch(intent)
     }
 
-    private fun handleImageSelected(imageUri: Uri) {
+    private fun handleImageSelected(imagePath: String, position: Int) {
         try {
-            // Store the image URI in the shopList object
-            shopList.imageUri = imageUri.toString()
-            showToast("תמונה נבחרה בהצלחה")
-
-            // Update the database with the new image URI
-            updateList(shopListAdapter.items)
-
-            // Optional: If you want to display the image somewhere, you could add an ImageView
-            // to your layout and set it here, e.g.:
-            // view?.findViewById<ImageView>(R.id.ivShopListImage)?.setImageURI(imageUri)
-
+            if (position != -1) {
+                shopListAdapter.items[position].imageUri = imagePath
+                shopListAdapter.notifyItemChanged(position)
+                updateList(shopListAdapter.items)
+                showToast("תמונה נבחרה בהצלחה")
+            }
         } catch (e: Exception) {
+            Log.e("ShopListFragment", "Error handling image selection: ${e.message}")
             showToast("שגיאה בטעינת התמונה: ${e.message}")
-            e.printStackTrace()
         }
+    }
+
+    private fun copyImageToInternalStorage(uri: Uri): File {
+        val fileName = "shop_item_${System.currentTimeMillis()}.jpg"
+        val file = File(requireContext().filesDir, fileName)
+        requireContext().contentResolver.openInputStream(uri)?.use { input: InputStream ->
+            FileOutputStream(file).use { output ->
+                input.copyTo(output)
+            }
+        }
+        return file
     }
 
     private fun handleEnterAddress() {
@@ -215,7 +251,7 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
                 "Error: ${e.message}",
                 Toast.LENGTH_SHORT
             ).show()
-            e.printStackTrace()
+            Log.e("ShopListFragment", "Error in geocoding: ${e.message}")
         }
     }
 
@@ -227,7 +263,11 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
             shopList.latitude,
             shopList.longitude,
             object : ShopListsDatabaseHelper.InsertShopListCallback {
-                override fun onShopListInserted(shopList: ShopList?) {}
+                override fun onShopListInserted(shopList: ShopList?) {
+                    if (shopList == null) {
+                        Log.e("ShopListFragment", "Failed to update shop list in database")
+                    }
+                }
             }
         )
     }
@@ -238,15 +278,12 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Request permission if not granted
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 PERMISSION_REQUEST_CODE
             )
         } else {
-            val fusedLocationClient =
-                LocationServices.getFusedLocationProviderClient(requireActivity())
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
                     shopList.latitude = location.latitude
@@ -266,12 +303,15 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
     private fun onDeleteButtonClick(position: Int) {
         if (position >= 0 && position < shopListAdapter.items.size) {
             val selectedItem = shopListAdapter.items[position]
-            Toast.makeText(requireContext(), "Delete ${selectedItem.title}", Toast.LENGTH_SHORT)
-                .show()
+            // Delete the image file if it exists
+            selectedItem.imageUri?.let { path ->
+                val file = File(path)
+                if (file.exists()) file.delete()
+            }
+            Toast.makeText(requireContext(), "Delete ${selectedItem.title}", Toast.LENGTH_SHORT).show()
 
             shopListAdapter.items.removeAt(position)
             shopListAdapter.notifyItemRemoved(position)
-            // Update positions of remaining items
             shopListAdapter.notifyItemRangeChanged(position, shopListAdapter.items.size)
         }
     }
@@ -283,7 +323,6 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
             } else {
                 shopListAdapter.initialList(items)
                 shopListAdapter.notifyDataSetChanged()
-
             }
         }
     }
@@ -317,17 +356,20 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
     }
 
     private fun showOptionsBottomSheet(position: Int) {
-        val curItem =
-            shopListAdapter.items[position]
+        val curItem = shopListAdapter.items[position]
 
         val bottomSheetFragment = ShopItemOptionsBottomSheetDialogFragment.newInstance(
             curItem.title,
             curItem.count,
             curItem.unit
-        )
+        ).apply {
+            listener = this@ShopListFragment
+            this.position = position
+            this.onAddImageListener = { pos ->
+                openImagePicker(pos)
+            }
+        }
 
-        bottomSheetFragment.listener = this
-        bottomSheetFragment.position = position
         bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
     }
 
@@ -335,8 +377,7 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
         val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
         builder.setTitle("בחר תבשילים להוספה")
 
-        val recipesDbHelper = RecipesDatabaseHelper();
-        // Use the asynchronous getFriendsFromUsername function
+        val recipesDbHelper = RecipesDatabaseHelper()
         recipesDbHelper.getAllUserRecipes(username) { recipes ->
             val recipeNames = recipes.map { it.name }.toTypedArray()
             val checkedRecipes = BooleanArray(recipeNames.size) { false }
@@ -366,13 +407,12 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
         }
     }
 
-
     override fun onDeleteClicked(position: Int) {
         showConfirmationDialog(position)
     }
 
     override fun onConfirmClicked(position: Int, title: String, count: Int, unit: String) {
-        val shopListItem = ShopListItem(title, count, unit, false)
+        val shopListItem = ShopListItem(title, count, unit, false, shopListAdapter.items[position].imageUri)
         shopListsDatabaseHelper.updateShopListItem(id, position, shopListItem)
         shopListAdapter.items[position] = shopListItem
         shopListAdapter.notifyItemChanged(position)
