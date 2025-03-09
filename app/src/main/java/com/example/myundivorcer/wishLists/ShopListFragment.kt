@@ -2,10 +2,14 @@ package com.example.myundivorcer.wishLists
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,9 +43,11 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
     private lateinit var username: String
     private lateinit var shopListName: TextView
     private val PERMISSION_REQUEST_CODE = 101
+    private val PICK_IMAGE_REQUEST = 102
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var geocoder: Geocoder
+    private lateinit var uploadImageButton: ImageButton
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -71,6 +77,15 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
             }
         }
 
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                val imageUri = result.data?.data
+                if (imageUri != null) {
+                    handleImageSelected(imageUri)
+                }
+            }
+        }
+
         return view
     }
 
@@ -92,7 +107,7 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
         val itemTitle = view.findViewById<EditText>(R.id.etItemTitle)
         val count = view.findViewById<TextView>(R.id.etQuantity)
         val unitSpinner = view.findViewById<Spinner>(R.id.unitSpinner)
-
+        uploadImageButton = view.findViewById<ImageButton>(R.id.bUploadImage)
         val unitList = listOf("יחידות", "קג", "ג", "מל", "ליטר") // Replace with your list of units
         val unitAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, unitList)
@@ -112,9 +127,9 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
                 showToast("נראה שחסר לך שם מוצר ואו כמות.")
             }
         }
-        val chooseLocationButton = view.findViewById<MaterialButton>(R.id.button4)
-        chooseLocationButton.setOnClickListener {
-            openLocationPickerOrAddressInput()
+
+        uploadImageButton.setOnClickListener {
+            openImagePicker()
         }
 
         val addRecipesButton = view.findViewById<MaterialButton>(R.id.bAddRecipes)
@@ -126,39 +141,28 @@ class ShopListFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bo
         shopListName.text = shopList.name
     }
 
-    private fun openLocationPickerOrAddressInput() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Choose Location Method")
-        builder.setItems(arrayOf("Use Current Location", "Enter Address")) { _, which ->
-            when (which) {
-                0 -> {
-                    if (ActivityCompat.checkSelfPermission(
-                            requireContext(),
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        getCurrentLocation()
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
 
-                    } else {
-                        requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-                    }
-                }
+    private fun handleImageSelected(imageUri: Uri) {
+        try {
+            // Store the image URI in the shopList object
+            shopList.imageUri = imageUri.toString()
+            showToast("תמונה נבחרה בהצלחה")
 
-                1 -> {
-                    if (ActivityCompat.checkSelfPermission(
-                            requireContext(),
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        handleEnterAddress()
+            // Update the database with the new image URI
+            updateList(shopListAdapter.items)
 
-                    } else {
-                        requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-                    }
-                }
-            }
+            // Optional: If you want to display the image somewhere, you could add an ImageView
+            // to your layout and set it here, e.g.:
+            // view?.findViewById<ImageView>(R.id.ivShopListImage)?.setImageURI(imageUri)
+
+        } catch (e: Exception) {
+            showToast("שגיאה בטעינת התמונה: ${e.message}")
+            e.printStackTrace()
         }
-        builder.show()
     }
 
     private fun handleEnterAddress() {
