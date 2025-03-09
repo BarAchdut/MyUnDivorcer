@@ -21,7 +21,7 @@ import com.example.myundivorcer.dbHelpers.UsersDatabaseHelper
 import com.google.android.material.textfield.TextInputEditText
 import java.io.ByteArrayOutputStream
 
-class RegisterActivity : AppCompatActivity() {
+class UserRegisterActivity : AppCompatActivity() {
 
     private lateinit var usernameEditText: TextInputEditText
     private lateinit var emailEditText: TextInputEditText
@@ -76,13 +76,13 @@ class RegisterActivity : AppCompatActivity() {
                     override fun onRegistrationResult(success: Boolean, user: User?) {
                         if (success) {
                             Toast.makeText(
-                                this@RegisterActivity,
+                                this@UserRegisterActivity,
                                 "נרשמת בהצלחה.",
                                 Toast.LENGTH_SHORT
                             ).show()
                             navigateToLoginActivity()
                         } else {
-                            Toast.makeText(this@RegisterActivity, "משהו השתבש", Toast.LENGTH_SHORT)
+                            Toast.makeText(this@UserRegisterActivity, "משהו השתבש", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     }

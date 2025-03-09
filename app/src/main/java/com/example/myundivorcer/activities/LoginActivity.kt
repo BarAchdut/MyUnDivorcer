@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun onSignUpButtonClick(view: View) {
-        val intent = Intent(this, RegisterActivity::class.java)
+        val intent = Intent(this, UserRegisterActivity::class.java)
         startActivity(intent)
         finish()
     }

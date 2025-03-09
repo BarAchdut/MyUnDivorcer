@@ -19,10 +19,10 @@ import com.example.myundivorcer.dbHelpers.RequestsDatabaseHelper
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class RecipesFragment : Fragment() {
+class CollectionRecipesFragment : Fragment() {
 
     private val recipes: MutableList<Recipe> = mutableListOf()
-    private lateinit var recipesAdapter: RecipesAdapter
+    private lateinit var recipesAdapter: CollectionRecipesAdapter
     private lateinit var username: String
     private lateinit var recipesDatabaseHelper: RecipesDatabaseHelper
     private lateinit var requestsDatabaseHelper: RequestsDatabaseHelper
@@ -37,19 +37,19 @@ class RecipesFragment : Fragment() {
         recipesDatabaseHelper = RecipesDatabaseHelper()
         requestsDatabaseHelper = RequestsDatabaseHelper()
 
-        recipesAdapter = RecipesAdapter(
+        recipesAdapter = CollectionRecipesAdapter(
             recipes,
-            itemClickListener = object : RecipesAdapter.OnItemClickListener {
+            itemClickListener = object : CollectionRecipesAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     val selectedRecipe = recipes[position]
                     val bundle = Bundle()
                     bundle.putString("RECIPE_ID_KEY", selectedRecipe.id)
                     bundle.putString("RECIPE_NAME_KEY", selectedRecipe.name)
                     bundle.putString("USERNAME_KEY", username)
-                    replaceWithNewFragment(RecipeFragment(), bundle)
+                    replaceWithNewFragment(ItemRecipeFragment(), bundle)
                 }
             },
-            itemLongClickListener = object : RecipesAdapter.OnItemLongClickListener {
+            itemLongClickListener = object : CollectionRecipesAdapter.OnItemLongClickListener {
                 override fun onItemLongClick(position: Int, view: View) {
                     // Show the update dialog on long press
                     showUpdateItemDialog(recipes[position], position)
