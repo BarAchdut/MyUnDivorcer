@@ -15,10 +15,10 @@ import com.example.myundivorcer.R
 import com.example.myundivorcer.dataClasses.ShopListItem
 import com.example.myundivorcer.utils.StrikeThroughTextView
 
-class RecipeAdapter(
+class ItemRecipeAdapter(
     val items: MutableList<ShopListItem>,
     var itemLongClickListener: OnItemLongClickListener? = null
-) : RecyclerView.Adapter<RecipeAdapter.RecipeHolder>() {
+) : RecyclerView.Adapter<ItemRecipeAdapter.RecipeHolder>() {
 
     var procedure: String = ""
 
