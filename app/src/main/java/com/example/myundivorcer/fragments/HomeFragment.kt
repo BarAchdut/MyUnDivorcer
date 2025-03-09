@@ -20,11 +20,6 @@ class HomeFragment : Fragment() {
         (activity as BaseActivity?)?.updateTitle("בית")
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        var btnGoToScan = view.findViewById<ShapeableImageView>(R.id.btnGoToScan)
-        btnGoToScan.setOnClickListener {
-            navigateToFragment(BarcodeScannerFragment())
-        }
-
         val bundle = Bundle()
         bundle.putString("USERNAME_KEY", (activity as BaseActivity?)?.username!!)
 
