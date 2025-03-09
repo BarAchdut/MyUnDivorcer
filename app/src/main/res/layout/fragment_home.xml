@@ -15,54 +15,52 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/btnGoToScan"
-                style="@style/ButtonRoundedSquare"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="160dp"
-                android:layout_marginEnd="70dp"
-                android:src="@drawable/baseline_barcode_reader_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.LargeComponent" />
-
-            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/btnGoToMyRecipes"
                 style="@style/ButtonRoundedSquare"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="70dp"
-                android:layout_marginTop="160dp"
+                android:layout_marginTop="156dp"
                 android:src="@drawable/baseline_edit_note_24"
+                app:layout_constraintEnd_toStartOf="@+id/btnGoToMyWishlists1"
+                app:layout_constraintHorizontal_bias="0.381"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.LargeComponent" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="177dp"
+                android:layout_height="93dp"
+                android:background="@color/quantum_lightblue"
+                android:drawableBottom="@drawable/ic_home"
+                android:drawablePadding="8dp"
+                android:padding="16dp"
+                android:text="עמוד הבית"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintVertical_bias="0.3"
+                tools:ignore="MissingConstraints" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/btnGoToMyWishlists1"
                 style="@style/ButtonRoundedSquare"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginBottom="176dp"
+                android:layout_marginBottom="472dp"
                 android:src="@drawable/ic_shopping_cart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.758"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnGoToScan"
-                app:layout_constraintVertical_bias="0.287"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.LargeComponent"
                 tools:ignore="UsingOnClickInXml" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="סרוק מוצר"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.774"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnGoToScan" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -71,7 +69,7 @@
                 android:text="התבשילים שלי"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.225"
+                app:layout_constraintHorizontal_bias="0.305"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnGoToMyRecipes"
                 tools:ignore="MissingConstraints" />
@@ -84,6 +82,7 @@
                 android:text="הרשימות שלי"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.758"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/btnGoToMyWishlists1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
