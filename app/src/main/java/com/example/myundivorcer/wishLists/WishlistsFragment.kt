@@ -18,6 +18,7 @@ import com.example.myundivorcer.dbHelpers.RequestsDatabaseHelper
 import com.example.myundivorcer.dbHelpers.ShopListsDatabaseHelper
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.myundivorcer.network.ApiHelper
 
 class WishlistsFragment : Fragment() {
 
@@ -65,6 +66,12 @@ class WishlistsFragment : Fragment() {
             showCreateListDialog()
         }
 
+        // Fetch data button
+        val fetchApiDataButton: Button = view.findViewById(R.id.fetchApiDataButton)
+        fetchApiDataButton.setOnClickListener {
+            fetchDataFromApi()
+        }
+
         return view
     }
 
@@ -76,11 +83,25 @@ class WishlistsFragment : Fragment() {
         rvShopLists.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    private fun fetchDataFromApi() {
+        val apiUrl = "https://jsonplaceholder.typicode.com/posts" // Replace with your actual API URL
+
+        // Use the ApiHelper to fetch data
+        ApiHelper.fetchData(apiUrl) { response ->
+            if (response != null) {
+                // Handle successful response
+                Toast.makeText(requireContext(), "Data fetched successfully!", Toast.LENGTH_SHORT).show()
+                // Do something with the response
+            } else {
+                Toast.makeText(requireContext(), "Failed to fetch data.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun showShareListDialog(selectedList: ShopList) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
         builder.setTitle("בחר עם מי לשתף.")
 
-        // Use the asynchronous getFriendsFromUsername function
         requestsDatabaseHelper.getFriendsFromUsername(username) { friendUsernames ->
             val checkedFriends = BooleanArray(friendUsernames.size) { false }
 
@@ -93,7 +114,7 @@ class WishlistsFragment : Fragment() {
 
             builder.setPositiveButton("שתף") { _, _ ->
                 val selectedFriends = mutableListOf<String>()
-                selectedFriends.add(username) // Add itself first
+                selectedFriends.add(username)
                 for (i in checkedFriends.indices) {
                     if (checkedFriends[i]) {
                         selectedFriends.add(friendUsernames[i])
@@ -103,9 +124,7 @@ class WishlistsFragment : Fragment() {
                 shareListWithFriends(selectedList, selectedFriends)
             }
 
-            builder.setNegativeButton("ביטול") { dialog, _ ->
-                dialog.cancel()
-            }
+            builder.setNegativeButton("ביטול") { dialog, _ -> dialog.cancel() }
 
             builder.show()
         }
@@ -228,9 +247,7 @@ class WishlistsFragment : Fragment() {
             }
         }
 
-        builder.setNegativeButton("בטל") { dialog, _ ->
-            dialog.cancel()
-        }
+        builder.setNegativeButton("בטל") { dialog, _ -> dialog.cancel() }
 
         builder.show()
     }
