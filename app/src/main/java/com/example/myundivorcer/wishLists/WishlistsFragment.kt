@@ -19,6 +19,8 @@ import com.example.myundivorcer.dbHelpers.ShopListsDatabaseHelper
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.example.myundivorcer.network.ApiHelper
+import org.json.JSONArray
+import org.json.JSONObject
 
 class WishlistsFragment : Fragment() {
 
@@ -89,9 +91,25 @@ class WishlistsFragment : Fragment() {
         // Use the ApiHelper to fetch data
         ApiHelper.fetchData(apiUrl) { response ->
             if (response != null) {
-                // Handle successful response
-                Toast.makeText(requireContext(), "Data fetched successfully!", Toast.LENGTH_SHORT).show()
-                // Do something with the response
+                try {
+                    // Parse the response assuming it's a JSONArray of posts
+                    val jsonArray = JSONArray(response)
+                    val bodyText = StringBuilder()
+
+                    // Iterate through the array and extract the body from each post
+                    for (i in 0 until jsonArray.length()) {
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        val body = jsonObject.getString("body") // Extract the body of each post
+                        bodyText.append(body).append("\n\n") // Add body text to the StringBuilder
+                    }
+
+                    // Find the EditText by its ID and set the body data
+                    val apiDataTextBox: EditText = requireView().findViewById(R.id.apiDataTextBox)
+                    apiDataTextBox.setText(bodyText.toString()) // Display the extracted body text
+                } catch (e: Exception) {
+                    // Handle any errors that might occur during parsing
+                    Toast.makeText(requireContext(), "Failed to parse data.", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(requireContext(), "Failed to fetch data.", Toast.LENGTH_SHORT).show()
             }

@@ -33,8 +33,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="16dp"
-        android:text="Fetch Data"
+        android:text="ייבא הסבר למתכון"
         android:backgroundTint="?attr/colorPrimary"
         android:textColor="@android:color/white"
         android:textSize="16sp"/>
+
+    <!-- EditText to display API data -->
+    <EditText
+        android:id="@+id/apiDataTextBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="API Data will be shown here"
+        android:inputType="textMultiLine"
+        android:layout_margin="16dp"
+        android:scrollbars="vertical" />
 </LinearLayout>
