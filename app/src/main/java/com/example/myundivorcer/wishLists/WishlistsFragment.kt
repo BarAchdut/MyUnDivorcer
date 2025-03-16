@@ -18,6 +18,9 @@ import com.example.myundivorcer.dbHelpers.RequestsDatabaseHelper
 import com.example.myundivorcer.dbHelpers.ShopListsDatabaseHelper
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.myundivorcer.network.ApiHelper
+import org.json.JSONArray
+import org.json.JSONObject
 
 class WishlistsFragment : Fragment() {
 
@@ -65,6 +68,11 @@ class WishlistsFragment : Fragment() {
             showCreateListDialog()
         }
 
+        val fetchApiDataButton: Button = view.findViewById(R.id.fetchApiDataButton)
+        fetchApiDataButton.setOnClickListener {
+            fetchDataFromApi()
+        }
+
         return view
     }
 
@@ -76,11 +84,36 @@ class WishlistsFragment : Fragment() {
         rvShopLists.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    private fun fetchDataFromApi() {
+        val apiUrl = "https://jsonplaceholder.typicode.com/posts" // Replace with your actual API URL
+
+        ApiHelper.fetchData(apiUrl) { response ->
+            if (response != null) {
+                try {
+                    val jsonArray = JSONArray(response)
+                    val bodyText = StringBuilder()
+
+                    for (i in 0 until jsonArray.length()) {
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        val body = jsonObject.getString("body") // Extract the body of each post
+                        bodyText.append(body).append("\n\n") // Add body text to the StringBuilder
+                    }
+
+                    val apiDataTextBox: EditText = requireView().findViewById(R.id.apiDataTextBox)
+                    apiDataTextBox.setText(bodyText.toString()) // Display the extracted body text
+                } catch (e: Exception) {
+                    Toast.makeText(requireContext(), "Failed to parse data.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "Failed to fetch data.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun showShareListDialog(selectedList: ShopList) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
         builder.setTitle("בחר עם מי לשתף.")
 
-        // Use the asynchronous getFriendsFromUsername function
         requestsDatabaseHelper.getFriendsFromUsername(username) { friendUsernames ->
             val checkedFriends = BooleanArray(friendUsernames.size) { false }
 
@@ -93,7 +126,7 @@ class WishlistsFragment : Fragment() {
 
             builder.setPositiveButton("שתף") { _, _ ->
                 val selectedFriends = mutableListOf<String>()
-                selectedFriends.add(username) // Add itself first
+                selectedFriends.add(username)
                 for (i in checkedFriends.indices) {
                     if (checkedFriends[i]) {
                         selectedFriends.add(friendUsernames[i])
@@ -103,9 +136,7 @@ class WishlistsFragment : Fragment() {
                 shareListWithFriends(selectedList, selectedFriends)
             }
 
-            builder.setNegativeButton("ביטול") { dialog, _ ->
-                dialog.cancel()
-            }
+            builder.setNegativeButton("ביטול") { dialog, _ -> dialog.cancel() }
 
             builder.show()
         }
@@ -228,9 +259,7 @@ class WishlistsFragment : Fragment() {
             }
         }
 
-        builder.setNegativeButton("בטל") { dialog, _ ->
-            dialog.cancel()
-        }
+        builder.setNegativeButton("בטל") { dialog, _ -> dialog.cancel() }
 
         builder.show()
     }
