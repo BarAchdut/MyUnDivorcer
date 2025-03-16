@@ -68,7 +68,6 @@ class WishlistsFragment : Fragment() {
             showCreateListDialog()
         }
 
-        // Fetch data button
         val fetchApiDataButton: Button = view.findViewById(R.id.fetchApiDataButton)
         fetchApiDataButton.setOnClickListener {
             fetchDataFromApi()
@@ -88,26 +87,21 @@ class WishlistsFragment : Fragment() {
     private fun fetchDataFromApi() {
         val apiUrl = "https://jsonplaceholder.typicode.com/posts" // Replace with your actual API URL
 
-        // Use the ApiHelper to fetch data
         ApiHelper.fetchData(apiUrl) { response ->
             if (response != null) {
                 try {
-                    // Parse the response assuming it's a JSONArray of posts
                     val jsonArray = JSONArray(response)
                     val bodyText = StringBuilder()
 
-                    // Iterate through the array and extract the body from each post
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
                         val body = jsonObject.getString("body") // Extract the body of each post
                         bodyText.append(body).append("\n\n") // Add body text to the StringBuilder
                     }
 
-                    // Find the EditText by its ID and set the body data
                     val apiDataTextBox: EditText = requireView().findViewById(R.id.apiDataTextBox)
                     apiDataTextBox.setText(bodyText.toString()) // Display the extracted body text
                 } catch (e: Exception) {
-                    // Handle any errors that might occur during parsing
                     Toast.makeText(requireContext(), "Failed to parse data.", Toast.LENGTH_SHORT).show()
                 }
             } else {

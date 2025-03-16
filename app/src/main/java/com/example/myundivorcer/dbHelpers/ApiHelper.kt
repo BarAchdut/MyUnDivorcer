@@ -17,11 +17,9 @@ object ApiHelper {
             .url(url)
             .build()
 
-        // Make the network request asynchronously
         client.newCall(request).enqueue(object : okhttp3.Callback {
             override fun onFailure(call: okhttp3.Call, e: IOException) {
                 Log.e("ApiHelper", "API call failed", e)
-                // Post to main thread to show Toast
                 Handler(Looper.getMainLooper()).post {
                     callback(null)
                 }
@@ -29,14 +27,11 @@ object ApiHelper {
 
             override fun onResponse(call: okhttp3.Call, response: Response) {
                 if (response.isSuccessful) {
-                    // Get the response data
                     val responseData = response.body?.string()
-                    // Post to main thread to show Toast
                     Handler(Looper.getMainLooper()).post {
                         callback(responseData)
                     }
                 } else {
-                    // Post to main thread to show Toast
                     Handler(Looper.getMainLooper()).post {
                         callback(null)
                     }
