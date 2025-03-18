@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.myundivorcer.fragments.HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_wishlistsFragment"
+            app:destination="@id/wishlistsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/wishlistsFragment"
+        android:name="com.example.myundivorcer.wishLists.WishlistsFragment"
+        tools:layout="@layout/fragment_wishlists" />
+
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.example.myundivorcer.friends.FriendsFragment"
+        tools:layout="@layout/fragment_friends">
+        <action
+            android:id="@+id/action_friendsFragment_to_friendSearchFragment"
+            app:destination="@id/friendSearchFragment" />
+        <action
+            android:id="@+id/action_friendsFragment_to_friendRequestsFragment"
+            app:destination="@id/friendRequestsFragment" />
+        <action
+            android:id="@+id/action_friendsFragment_to_showFriendsFragment"
+            app:destination="@id/showFriendsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/friendSearchFragment"
+        android:name="com.example.myundivorcer.friends.FriendSearchFragment"
+        tools:layout="@layout/fragment_friend_search" />
+
+    <fragment
+        android:id="@+id/friendRequestsFragment"
+        android:name="com.example.myundivorcer.friends.FriendRequestsFragment"
+        tools:layout="@layout/fragment_friend_requests" />
+
+    <fragment
+        android:id="@+id/showFriendsFragment"
+        android:name="com.example.myundivorcer.friends.ShowFriendsFragment"
+        tools:layout="@layout/fragment_show_friends" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.myundivorcer.fragments.ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="com.example.myundivorcer.recipes.RecipesFragment"
+        tools:layout="@layout/fragment_recipe" />
+</navigation>

@@ -5,28 +5,41 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.myundivorcer.InterfaceFragmentTitle
 import com.example.myundivorcer.R
 import com.example.myundivorcer.dataClasses.User
 import com.example.myundivorcer.dbHelpers.UsersDatabaseHelper
-import com.example.myundivorcer.fragments.HomeFragment
-import com.example.myundivorcer.fragments.ProfileFragment
-import com.example.myundivorcer.friends.FriendsFragment
-import com.example.myundivorcer.wishLists.WishlistsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 open class BaseActivity : AppCompatActivity(), InterfaceFragmentTitle {
     private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var navController: NavController
     private lateinit var dbHelper: UsersDatabaseHelper
 
     var username: String? = null
     var user: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_base) // Make sure this layout contains NavHostFragment
+
         dbHelper = UsersDatabaseHelper(this)
         user = dbHelper.getLocallyStoredUser()
         username = user?.username
+
+        // Setup Navigation Controller
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
+        // Setup Bottom Navigation with NavController
+        bottomNavigation = findViewById(R.id.bottomNavigation)
+        bottomNavigation.setupWithNavController(navController)
+
+        setUpUpperNavBar()
     }
 
     internal fun setUpUpperNavBar() {
@@ -37,74 +50,22 @@ open class BaseActivity : AppCompatActivity(), InterfaceFragmentTitle {
         supportActionBar?.customView = customUpperNavBar
     }
 
-    internal fun setBottomNavBar() {
-        bottomNavigation = findViewById(R.id.bottomNavigation)
-        bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
-
-            when (menuItem.itemId) {
-                R.id.action_wishlist -> {
-                    loadFragment(WishlistsFragment())
-                    true
-                }
-
-                R.id.action_home -> {
-                    loadFragment(HomeFragment())
-                    true
-                }
-
-                R.id.action_friends -> {
-                    loadFragment(FriendsFragment())
-                    true
-                }
-
-
-                else -> false
-            }
-        }
-
-        // Set the "Home" item as the default selected item
-        bottomNavigation.selectedItemId = R.id.action_home
-    }
-
-    fun updateNavigationBarToWishlists() {
-        bottomNavigation.selectedItemId = R.id.action_wishlist
-    }
-
     override fun updateTitle(title: String) {
-        // Update the title in your custom upper navigation bar
-        val fragmentTitle: TextView = findViewById(R.id.title)
-        fragmentTitle.text = title
-    }
-
-    fun loadFragment(fragment: Fragment, args: Bundle? = null, addToBackStack: Boolean = true) {
-        val transaction = supportFragmentManager.beginTransaction()
-
-        // Set arguments if provided
-        fragment.arguments = args
-
-        // Replace the existing fragment with the new one
-        transaction.replace(R.id.fragmentContainer, fragment)
-
-        // Add to back stack if needed
-        if (addToBackStack) {
-            transaction.addToBackStack(null)
-                .setReorderingAllowed(true)
-        }
-
-        // Commit the transaction
-        transaction.commit()
+//        val fragmentTitle: TextView = findViewById(R.id.title)
+//        fragmentTitle.text = title
     }
 
     fun onProfileButtonClick(view: View) {
-        val profileFragment = ProfileFragment()
-        loadFragment(profileFragment)
+        navController.navigate(R.id.profileFragment)
     }
 
     fun onBackButtonClick(view: View) {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStack()
-        } else {
+        if (!navController.popBackStack()) {
             finish()
         }
+    }
+
+    fun updateNavigationBarToWishlists() {
+        navController.navigate(R.id.wishlistsFragment)
     }
 }
