@@ -31,13 +31,13 @@ class FriendRequestViewHolder(
 
     private fun showFriendRequestDialog(context: Context, friendRequest: FriendRequest) {
         AlertDialog.Builder(context)
-            .setTitle("Friend Request")
-            .setMessage("Do you want to accept or ignore this friend request?")
-            .setPositiveButton("Accept") { dialog, _ ->
+            .setTitle("בקשת חברות")
+            .setMessage("האם תרצה לאשר את בקשת החברות")
+            .setPositiveButton("אשר") { dialog, _ ->
                 acceptCallback.invoke(friendRequest)
                 dialog.dismiss()
             }
-            .setNegativeButton("Ignore") { dialog, _ ->
+            .setNegativeButton("דחה") { dialog, _ ->
                 ignoreCallback.invoke(friendRequest)
                 dialog.dismiss()
             }
