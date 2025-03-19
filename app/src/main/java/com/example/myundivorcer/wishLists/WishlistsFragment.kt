@@ -85,31 +85,26 @@ class WishlistsFragment : Fragment() {
     }
 
     private fun fetchDataFromApi() {
-        val apiUrl = "https://jsonplaceholder.typicode.com/posts" // Replace with your actual API URL
+        val apiUrl = "https://jsonplaceholder.typicode.com/posts" // Full URL
 
-        ApiHelper.fetchData(apiUrl) { response ->
-            if (response != null) {
+        ApiHelper.fetchData(apiUrl) { posts ->
+            if (posts != null) {
                 try {
-                    val jsonArray = JSONArray(response)
                     val bodyText = StringBuilder()
-
-                    for (i in 0 until jsonArray.length()) {
-                        val jsonObject = jsonArray.getJSONObject(i)
-                        val body = jsonObject.getString("body") // Extract the body of each post
-                        bodyText.append(body).append("\n\n") // Add body text to the StringBuilder
+                    for (post in posts) {
+                        bodyText.append(post.body).append("\n\n") // Add body text to the StringBuilder
                     }
 
                     val apiDataTextBox: EditText = requireView().findViewById(R.id.apiDataTextBox)
                     apiDataTextBox.setText(bodyText.toString()) // Display the extracted body text
                 } catch (e: Exception) {
-                    Toast.makeText(requireContext(), "Failed to parse data.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to process data.", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(requireContext(), "Failed to fetch data.", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
     private fun showShareListDialog(selectedList: ShopList) {
         val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
         builder.setTitle("בחר עם מי לשתף.")
