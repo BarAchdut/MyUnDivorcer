@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myundivorcer.R
 import com.example.myundivorcer.dataClasses.Recipe
 
-class RecipesAdapter(
+class CollectionRecipesAdapter(
     val items: MutableList<Recipe>,
     var itemClickListener: OnItemClickListener? = null,
     var itemLongClickListener: OnItemLongClickListener? = null,
     private var parentView: View
-) : RecyclerView.Adapter<RecipesAdapter.RecipesHolder>() {
+) : RecyclerView.Adapter<CollectionRecipesAdapter.RecipesHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)

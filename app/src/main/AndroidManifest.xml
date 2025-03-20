@@ -63,7 +63,7 @@
         </activity>
 
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name=".activities.UserRegisterActivity"
             android:label="@string/register_activity_title"
             android:parentActivityName=".activities.LoginActivity"
             android:theme="@style/AppTheme">

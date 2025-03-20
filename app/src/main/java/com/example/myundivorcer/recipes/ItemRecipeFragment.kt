@@ -29,8 +29,8 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.button.MaterialButton
 
-class RecipeFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.BottomSheetListener {
-    private lateinit var recipeAdapter: RecipeAdapter
+class ItemRecipeFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.BottomSheetListener {
+    private lateinit var recipeAdapter: ItemRecipeAdapter
     private lateinit var id: String
     private lateinit var name: String
     private lateinit var username: String
@@ -66,8 +66,8 @@ class RecipeFragment : Fragment(), ShopItemOptionsBottomSheetDialogFragment.Bott
                 Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
             }
         }
-        recipeAdapter = RecipeAdapter(mutableListOf(),
-            itemLongClickListener = object : RecipeAdapter.OnItemLongClickListener {
+        recipeAdapter = ItemRecipeAdapter(mutableListOf(),
+            itemLongClickListener = object : ItemRecipeAdapter.OnItemLongClickListener {
                 override fun onItemLongClick(position: Int, view: View) {
                     showOptionsBottomSheet(position)
                 }

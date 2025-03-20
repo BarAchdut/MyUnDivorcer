@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.myundivorcer.activities.BaseActivity
 import com.example.myundivorcer.R
-import com.example.myundivorcer.recipes.RecipesFragment
+import com.example.myundivorcer.recipes.CollectionRecipesFragment
 import com.example.myundivorcer.wishLists.WishlistsFragment
 import com.google.android.material.imageview.ShapeableImageView
 
@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
 
         var btnGoToMyRecipes = view.findViewById<ShapeableImageView>(R.id.btnGoToMyRecipes)
         btnGoToMyRecipes.setOnClickListener {
-            navigateToFragment(RecipesFragment(), bundle)
+            navigateToFragment(CollectionRecipesFragment(), bundle)
         }
 
         var btnGoToMyWishlists = view.findViewById<ShapeableImageView>(R.id.btnGoToMyWishlists1)
