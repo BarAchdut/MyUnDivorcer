@@ -15,25 +15,13 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/btnGoToScan"
-                style="@style/ButtonRoundedSquare"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="160dp"
-                android:layout_marginEnd="70dp"
-                android:src="@drawable/baseline_barcode_reader_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.LargeComponent" />
-
-            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/btnGoToMyRecipes"
                 style="@style/ButtonRoundedSquare"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="160dp"
+                android:layout_marginTop="196dp"
                 android:src="@drawable/baseline_edit_note_24"
+                app:layout_constraintEnd_toStartOf="@+id/btnGoToMyWishlists1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.LargeComponent" />
@@ -43,51 +31,53 @@
                 style="@style/ButtonRoundedSquare"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginBottom="176dp"
                 android:src="@drawable/ic_shopping_cart"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnGoToMyRecipes"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnGoToScan"
-                app:layout_constraintVertical_bias="0.287"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.LargeComponent"
-                tools:ignore="UsingOnClickInXml" />
+                app:layout_constraintTop_toTopOf="@+id/btnGoToMyRecipes"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.LargeComponent" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="סרוק מוצר"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.774"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnGoToScan" />
-
+            <!-- Text for "My Recipes" -->
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="התבשילים שלי"
                 android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.225"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/btnGoToMyRecipes"
                 app:layout_constraintTop_toBottomOf="@+id/btnGoToMyRecipes"
-                tools:ignore="MissingConstraints" />
+                app:layout_constraintEnd_toEndOf="@+id/btnGoToMyRecipes" />
 
+            <!-- Text for "My Wishlists" -->
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
                 android:text="הרשימות שלי"
                 android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/btnGoToMyWishlists1"
+                app:layout_constraintTop_toBottomOf="@+id/btnGoToMyWishlists1"
+                app:layout_constraintEnd_toEndOf="@+id/btnGoToMyWishlists1" />
+
+            <!-- Home Page Text (Centered below) -->
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="92dp"
+                android:background="@color/quantum_lightblue"
+                android:drawableBottom="@drawable/ic_home"
+                android:drawablePadding="8dp"
+                android:padding="16dp"
+                android:text="עמוד הבית"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/btnGoToMyWishlists1" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </FrameLayout>
 
 </RelativeLayout>

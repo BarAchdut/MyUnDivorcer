@@ -20,6 +20,7 @@ class ShopItemOptionsBottomSheetDialogFragment : DialogFragment() {
 
     var listener: BottomSheetListener? = null
     var position: Int = -1
+    var onAddImageListener: ((Int) -> Unit)? = null  // Added listener for image addition
 
     companion object {
         const val ARG_TITLE = "arg_title"
@@ -58,6 +59,7 @@ class ShopItemOptionsBottomSheetDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val btnDeleteItem: Button = view.findViewById(R.id.btnDeleteItem)
         val btnConfirmUpdate: Button = view.findViewById(R.id.btnConfirmUpdate)
+        val btnAddImage: Button = view.findViewById(R.id.btnAddImage)  // New button
         val etItemTitleUpdate: EditText = view.findViewById(R.id.etItemTitleUpdate)
         val etQuantityUpdate: EditText = view.findViewById(R.id.etQuantityUpdate)
         val unitSpinnerUpdate = view.findViewById<Spinner>(R.id.unitSpinnerUpdate)
@@ -70,7 +72,7 @@ class ShopItemOptionsBottomSheetDialogFragment : DialogFragment() {
         etItemTitleUpdate.setText(title)
         etQuantityUpdate.setText(count.toString())
 
-        val unitList = listOf("יחידות", "קג", "ג", "מל", "ליטר") // Replace with your list of units
+        val unitList = listOf("יחידות", "קג", "ג", "מל", "ליטר")
         val unitAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, unitList)
         unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -85,10 +87,15 @@ class ShopItemOptionsBottomSheetDialogFragment : DialogFragment() {
 
         btnConfirmUpdate.setOnClickListener {
             val updatedTitle = etItemTitleUpdate.text.toString()
-            val updatedCount = etQuantityUpdate.text.toString().toInt()
+            val updatedCount = etQuantityUpdate.text.toString().toIntOrNull() ?: count
             val updatedUnit = unitSpinnerUpdate.selectedItem.toString()
 
             listener?.onConfirmClicked(position, updatedTitle, updatedCount, updatedUnit)
+            dismiss()
+        }
+
+        btnAddImage.setOnClickListener {
+            onAddImageListener?.invoke(position)
             dismiss()
         }
     }

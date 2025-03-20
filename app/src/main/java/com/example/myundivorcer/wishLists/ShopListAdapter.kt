@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myundivorcer.R
 import com.example.myundivorcer.dataClasses.ShopListItem
 import com.example.myundivorcer.utils.StrikeThroughTextView
+import java.io.File
 
 class ShopListAdapter(
     val items: MutableList<ShopListItem>,
@@ -42,7 +45,7 @@ class ShopListAdapter(
 
     fun addShopListItem(item: ShopListItem) {
         items.add(item)
-        notifyItemInserted(items.size + 1)
+        notifyItemInserted(items.size - 1)
     }
 
     private fun toggleStrikeThrough(
@@ -67,40 +70,51 @@ class ShopListAdapter(
             val cbCheckBox: CheckBox = findViewById(R.id.cbBought)
             val countItem: TextView = findViewById(R.id.tvItemCount)
             val pencilImageView: ImageView = findViewById(R.id.pencilImageView)
+            val ivItemImage: ImageView = findViewById(R.id.ivItemImage)
 
             tvShopListItem.text = curItem.title
             cbCheckBox.isChecked = curItem.checked
             countItem.text = "${curItem.count} ${curItem.unit}"
             tvShopListItem.setStrikeThroughTextFlag(cbCheckBox.isChecked)
+
+            // Load image from internal file path
+            curItem.imageUri?.let { path ->
+                val file = File(path)
+                if (file.exists()) {
+                    val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+                    ivItemImage.setImageBitmap(bitmap)
+                    ivItemImage.visibility = View.VISIBLE
+                } else {
+                    Log.w("ShopListAdapter", "Image file not found: $path")
+                    ivItemImage.setImageDrawable(null)
+                    ivItemImage.visibility = View.GONE
+                }
+            } ?: run {
+                ivItemImage.setImageDrawable(null)
+                ivItemImage.visibility = View.GONE
+            }
+
             cbCheckBox.setOnCheckedChangeListener { _, checked ->
                 toggleStrikeThrough(tvShopListItem, checked, pencilImageView)
-                curItem.checked = !curItem.checked
+                curItem.checked = checked
             }
         }
 
         holder.itemView.setOnLongClickListener {
             itemLongClickListener?.onItemLongClick(position, holder.itemView)
-            true // Consume the long click event
+            true
         }
     }
 
     private fun animateCrayonMark(pencilImageView: ImageView, textView: StrikeThroughTextView) {
         pencilImageView.visibility = View.VISIBLE
-
-        // Get the starting position of tvShopItemTitle relative to its parent
         val tvStartX = textView.x
-
-        // Get the ending position of tvShopItemTitle relative to its parent
         val tvEndX = tvStartX + textView.width
-
-        // Reset the translationX to the starting position before starting a new animation
         pencilImageView.translationX = tvStartX
-
-        // Set the pencil image dynamically
         pencilImageView.setImageResource(R.drawable.pencil)
 
         val movePencil = ObjectAnimator.ofFloat(pencilImageView, "translationX", tvStartX, tvEndX)
-        movePencil.duration = 500 // Adjust the duration as needed
+        movePencil.duration = 500
 
         movePencil.addUpdateListener { animation ->
             val value = animation.animatedValue as Float
